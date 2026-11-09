@@ -1,0 +1,3 @@
+INFO|Checkout|Application started
+WARNING|Inventory|Only 3 products remaining
+ERROR|Payments|Payment request failed

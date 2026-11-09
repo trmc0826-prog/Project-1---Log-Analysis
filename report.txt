@@ -1,0 +1,6 @@
+Log Analysis Report
+Total logs: 3
+Info logs: 1
+Error logs: 1
+Warning logs: 1
+Contains errors: True
