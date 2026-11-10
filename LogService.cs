@@ -64,42 +64,64 @@ public bool HasErrors()
     }
 
 public void LoadFromFile(string filePath)
-    {   
-            if (!File.Exists(filePath))
-        {
-            Console.WriteLine("File not found");
-            return;
-        }
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines)
+{
+    if (!File.Exists(filePath))
+    {
+        Console.WriteLine("File not found");
+        return;
+    }
+
+// Bruk av KI her til å få forklart try/catch metode som løsning på at en fil kan eksistere men misslykkest med å åpne.
+
+    try
+    {
+        string[] lines = File.ReadAllLines(filePath);
+
+        foreach (string line in lines)
         {
             string[] parts = line.Split('|');
 
-            if (parts.Length == 3 
-            && !string.IsNullOrWhiteSpace(parts[0])
-            && !string.IsNullOrWhiteSpace(parts[1]) 
-            && !string.IsNullOrWhiteSpace(parts[2])
-            && (parts[0].Equals("INFO", StringComparison.OrdinalIgnoreCase)
-            || parts[0].Equals("WARNING", StringComparison.OrdinalIgnoreCase)
-            || parts[0].Equals("ERROR", StringComparison.OrdinalIgnoreCase)))
+            if (parts.Length == 3
+                && !string.IsNullOrWhiteSpace(parts[0])
+                && !string.IsNullOrWhiteSpace(parts[1])
+                && !string.IsNullOrWhiteSpace(parts[2])
+                && (parts[0].Equals("INFO", StringComparison.OrdinalIgnoreCase)
+                    || parts[0].Equals("WARNING", StringComparison.OrdinalIgnoreCase)
+                    || parts[0].Equals("ERROR", StringComparison.OrdinalIgnoreCase)))
             {
                 LogEntry entry = new LogEntry(parts[0], parts[1], parts[2]);
                 logs.Add(entry);
             }
-                else
+            else
             {
                 Console.WriteLine("Invalid log data, line skipped");
             }
         }
-    }  
-public void SaveReport(string filePath)
-    {
-        string report = "Log Analysis Report";
-        report += $"\nTotal logs: {GetTotalCount()}";
-        report += $"\nInfo logs: {GetCountByLevel("INFO")}";
-        report += $"\nError logs: {GetCountByLevel("ERROR")}";
-        report += $"\nWarning logs: {GetCountByLevel("WARNING")}";
-        report += $"\nContains errors: {HasErrors()}";
-        File.WriteAllText(filePath, report);
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error reading file: {ex.Message}");
+    }
+}
+
+public bool SaveReport(string filePath)
+{
+    string report = "Log Analysis Report";
+    report += $"\nTotal logs: {GetTotalCount()}";
+    report += $"\nInfo logs: {GetCountByLevel("INFO")}";
+    report += $"\nError logs: {GetCountByLevel("ERROR")}";
+    report += $"\nWarning logs: {GetCountByLevel("WARNING")}";
+    report += $"\nContains errors: {HasErrors()}";
+
+    try
+    {
+        File.WriteAllText(filePath, report);
+        return true;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error saving report: {ex.Message}");
+        return false;
+    }
+}
 }

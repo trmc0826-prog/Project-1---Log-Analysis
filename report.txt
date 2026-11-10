@@ -1,6 +1,6 @@
 Log Analysis Report
-Total logs: 3
-Info logs: 1
-Error logs: 1
-Warning logs: 1
+Total logs: 6
+Info logs: 2
+Error logs: 2
+Warning logs: 2
 Contains errors: True

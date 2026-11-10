@@ -1,3 +1,6 @@
+ERROR|Payments|Payment request failed
+WARNING|Payments|Payment response was slow
 INFO|Checkout|Application started
 WARNING|Inventory|Only 3 products remaining
-ERROR|Payments|Payment request failed
+ERROR|Checkout|Unable to complete order
+INFO|Inventory|Product loaded
